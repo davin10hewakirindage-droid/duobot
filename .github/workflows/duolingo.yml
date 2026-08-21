@@ -14,10 +14,10 @@ jobs:
         with:
           python-version: '3.10'
 
-      - name: 2. Install Duolingo Bot Packages
+      - name: 2. Download and Install Bot Package
         run: |
           python -m pip install --upgrade pip
-          pip install 'git+https://github.com'
+          pip install https://github.com
           playwright install chromium
 
       - name: 3. Run the Bot Engine
