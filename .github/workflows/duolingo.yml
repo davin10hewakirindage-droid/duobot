@@ -20,9 +20,9 @@ jobs:
           pip install duolingo-bot
           playwright install chromium
 
-      - name: 3. Run the Bot
+      - name: 3. Run the Bot Engine
         env:
           DUO_USERID: ${{ secrets.DUO_USERID }}
           DUO_AUTH: ${{ secrets.DUO_AUTH }}
         run: |
-          duolingo-bot --lessons 1
+          python -m duolingo_bot --lessons 1000
