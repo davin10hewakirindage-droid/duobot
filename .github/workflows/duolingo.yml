@@ -1,28 +1,30 @@
 name: Daily Duolingo Cloud Bot
 on:
   schedule:
-    # Triggers the cloud bot automatically every day at 7:00 PM UTC (8:00 PM BST)
-    - cron: '0 19 * * *'
+    # Triggers the cloud bot automatically every day at 8:00 PM UTC
+    - cron: '0 20 * * *'
   workflow_dispatch: # Allows you to manually trigger a run whenever you want
 
 jobs:
   run-bot:
     runs-on: ubuntu-latest
     steps:
-      - name: 1. Install Python Environment
+      - name: 1. Download Repository Code
+        uses: actions/checkout@v4
+
+      - name: 2. Install Python Environment
         uses: actions/setup-python@v5
         with:
           python-version: '3.10'
 
-      - name: 2. Download and Install Bot Package
+      - name: 3. Install Duobot Project Dependencies
         run: |
           python -m pip install --upgrade pip
-          pip install https://github.com
-          playwright install chromium
+          pip install .
 
-      - name: 3. Run the Bot Engine
+      - name: 4. Authenticate and Run Bot
         env:
           DUO_USERID: ${{ secrets.DUO_USERID }}
           DUO_AUTH: ${{ secrets.DUO_AUTH }}
         run: |
-          python -m duolingo_bot --lessons 100
+          duobot --lessons 1000
